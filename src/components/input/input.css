@@ -1,0 +1,13 @@
+﻿.input {
+ margin-bottom: 0.5rem;
+ position: relative;
+}
+
+.input__label {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.input__block {
+  display: block;
+}
