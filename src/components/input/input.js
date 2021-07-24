@@ -2,24 +2,21 @@
 import './input.css'
 
 export default class Input extends Component {
-  // handleChange(event) {
-  //   this.setState({value: event.target.value});
-  // }
-
-  // handleSubmit(event) {
-  //   alert('A name was submitted: ' + this.state.value);
-  //   event.preventDefault();
-  // }
-
+  onChangeCounter = (event) => {
+    const value = +event.target.value;
+    this.props.onChangeCounter(value);
+  }
   render() {
+    const {type, name, value} = this.props;
     return (
       <div className="input">
         <label className="input__label">
-          Введите значение:
-          </label>
-          <input type="text" className="input__block"/>
-          {/* value={this.state.value} onChange={this.handleChange} */}
-       
+          {name}
+        </label>
+        <input type={type} className="input__block"
+          value={value || ''} 
+          onChange={this.onChangeCounter}
+        />
       </div>
     );
   }

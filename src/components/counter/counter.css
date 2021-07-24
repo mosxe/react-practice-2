@@ -1,0 +1,32 @@
+﻿.counter-content {
+  display: flex;
+  margin: 10px 0;
+  align-items: center;
+  justify-content: center;
+  max-width: 100px;
+}
+
+.counter-content__step {
+  flex: 1 0 100%;
+  text-align: center;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  margin: 0 10px;
+}
+
+.counter-content__button {
+  border-radius: 4px;
+  position: relative;
+  padding: 15px;
+  border: none;
+  transition: all .2s ease-in;
+  min-width: 40px;
+}
+
+.counter-content__button:hover {
+  cursor: pointer;
+  background-color: rgb(197, 194, 194);
+}
+
+
+
