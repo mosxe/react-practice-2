@@ -1,4 +1,4 @@
-Практическое задание №1 по React
+Практическое задание №2 по React
 ### `npm start`
 
 Runs the app in the development mode.\
