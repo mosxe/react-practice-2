@@ -9,7 +9,8 @@ const App = () => {
   const [step, setStep] = useState(null);
   const [rows, setRows] = useState([]);
 
-  const changeCounter = (value) => {
+  const changeCounter = (event) => {
+    const value = !event.target.value ? '' : +event.target.value; 
     setStep(value);
   };
 
@@ -26,7 +27,7 @@ const App = () => {
     setRows((rows) => [...rows, newRow]);
   };
 
-  const actionMinusTable = (l, k) => {
+  const actionMinusTable = () => {
     const startCounter = rows.length === 0 ? 0 : rows[rows.length-1].end_counter;
     const stepCounter = 1;
     const endCounter = startCounter  - stepCounter;
@@ -42,7 +43,7 @@ const App = () => {
     <div className="App">
       <div className="block-actions">
         <Input type="number" name="Введите значение:"
-          onChangeCounter={changeCounter}/>
+          onChange={changeCounter}/>
         <Counter step={step} onMinus={actionMinusTable} onPlus={actionPlusTable}/>
       </div>
       <Table head={tableHead} rows={rows}/>
