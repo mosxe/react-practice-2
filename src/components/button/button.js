@@ -1,9 +1,13 @@
 ﻿import React from 'react';
+import './button.css';
 
-const button = ({text, onClick}) => {
+const button = ({text, onClick, className, icon}) => {
   return (
-    <button className="counter-content__button" onClick={onClick}>
-      {text}
+    <button className={`button ${className}`} onClick={onClick}>
+      <span className="button__text">
+        {icon ? icon : ''}
+        {text}
+      </span>
     </button>
   );
 };

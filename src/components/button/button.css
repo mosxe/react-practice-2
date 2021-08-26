@@ -1,0 +1,21 @@
+﻿.button {
+  font-size: 0.875rem;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button__text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button__text svg {
+  margin-right: 6px;
+}
