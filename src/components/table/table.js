@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import './table.css';
 
-const table = ({head, rows, deleteItem}) => {
+const table = ({head, rows}) => {
   const ths = head.map((item, index) => {
     return (<th key={`th_${index}`}>{item}</th>)
   });
@@ -13,7 +13,7 @@ const table = ({head, rows, deleteItem}) => {
           return (<td key={key}>{item}</td>)
         });
       });
-      return (<tr key={id}>{values}</tr>);
+      return (<tr key={index}>{values}</tr>);
     })
 
   );

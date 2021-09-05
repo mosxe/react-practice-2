@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import './app.css';
 import Counter from '../counter';
 import Button from '../button';
@@ -13,7 +13,7 @@ const App = () => {
   const [step, setStep] = useState(null);
   const [rows, setRows] = useState([]);
   const [countRecords, setCountRecords] = useState(0);
-  const [countDeleteRecords, setCountDeleteRecords] = useState([]);
+  const [deleteRecords, setDeleteRecords] = useState([]);
 
   const changeCounter = (event) => {
     const value = +event.target.value || '';
@@ -24,9 +24,9 @@ const App = () => {
     const startCounter = rows.length === 0 ? 0 : rows[rows.length-1].items[0].end_counter;
     const stepCounter = step ? step : 1;
     const endCounter = startCounter + stepCounter;
-    const idRow = rows.length + 1;
+    const idRow = getId();
     const newRow = {
-      id: rows.length + 1,
+      id: idRow,
       items: [{
         start_counter: Number(startCounter),
         step_counter: Number(stepCounter),
@@ -42,7 +42,7 @@ const App = () => {
     const startCounter = rows.length === 0 ? 0 : rows[rows.length-1].items[0].end_counter;
     const stepCounter = step ? step : 1;
     const endCounter = startCounter  - stepCounter;
-    const idRow = rows.length + 1;
+    const idRow = getId();
     const newRow = {
       id: idRow,
       items: [{
@@ -56,15 +56,41 @@ const App = () => {
     setRows((rows) => [...rows, newRow]);
   };
 
-  const deleteItem = (id) => {
-    console.log(id);
-    setCountRecords((count) => count + 1);
+  const deleteItem = (id, rows) => {
+    setRows((rows) => {
+      let deleteRow = rows.find(i => i.id === id);
+      setDeleteRecords((deleteRows) => [...deleteRows, deleteRow]);
+      return rows.filter(i => i.id !== id);
 
+    });
+    setCountRecords((count) => count + 1);
   };
 
-  const restoreRows = () => {
-    console.log('restore');
+  const refreshIds = (rows)=> {
+    const updateIdsRows = rows.map((item, index) => {
+      item.id = index;
+      return item;
+    });
+    return updateIdsRows;
   }
+
+  const restoreRows = () => {
+    const newArrayRows = [...rows];
+    deleteRecords.forEach(item => {
+      newArrayRows.splice(item.id, 0, item);
+      
+    });
+    const newUpdateIdsRows = refreshIds(newArrayRows);
+    setCountRecords(0);
+    setDeleteRecords([]);
+    setRows(newUpdateIdsRows);
+  };
+
+  const getId = () => {
+    const id = rows.length === 0 ? 0 : rows[rows.length-1].id + 1;
+    return id;
+  };
+
 
   return (
     <div className="App">
@@ -76,10 +102,10 @@ const App = () => {
         </div>
         <div className="block-actions delete-conteiner">
           <div className="delete-conteiner__name">Всего записей в архиве: <span>{countRecords}</span></div>
-          <Button className="delete-conteiner__button" text="Восстановить"/>
+          <Button className="delete-conteiner__button" text="Восстановить" onClick={() => restoreRows()}/>
         </div>
       </div>
-      <Table head={tableHead} rows={rows} deleteItem={deleteItem}/>
+      <Table head={tableHead} rows={rows}/>
     </div>
   );
 }
