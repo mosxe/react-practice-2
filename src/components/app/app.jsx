@@ -4,6 +4,7 @@ import Counter from '../counter';
 import Button from '../button';
 import Input from '../input';
 import Table from '../table';
+import TableCell from '../table-cell';
 import { FaTrash } from 'react-icons/fa';
 
 const trashIcon = <FaTrash color="red" cursor="pointer"/>;
@@ -21,37 +22,31 @@ const App = () => {
   };
 
   const actionPlusTable = () => {
-    const startCounter = rows.length === 0 ? 0 : rows[rows.length-1].items[0].end_counter;
+    const startCounter = rows.length === 0 ? 0 : rows[rows.length-1].end_counter;
     const stepCounter = step ? step : 1;
     const endCounter = startCounter + stepCounter;
     const idRow = getId();
     const newRow = {
       id: idRow,
-      items: [{
         start_counter: Number(startCounter),
         step_counter: Number(stepCounter),
         end_counter: Number(endCounter),
-        action: 'Увеличили',
-        button: <Button text="Delete" icon={trashIcon} onClick={() => deleteItem(idRow)}/>
-      }]
+        action: 'Увеличили'
     };
     setRows((rows) => [...rows, newRow]);
   };
 
   const actionMinusTable = () => {
-    const startCounter = rows.length === 0 ? 0 : rows[rows.length-1].items[0].end_counter;
+    const startCounter = rows.length === 0 ? 0 : rows[rows.length-1].end_counter;
     const stepCounter = step ? step : 1;
     const endCounter = startCounter  - stepCounter;
     const idRow = getId();
     const newRow = {
       id: idRow,
-      items: [{
         start_counter: Number(startCounter),
         step_counter: Number(stepCounter),
         end_counter: Number(endCounter),
-        action: 'Уменьшили',
-        button: <Button text="Delete" icon={trashIcon} onClick={() => deleteItem(idRow)}/>
-      }]
+        action: 'Уменьшили'
     };
     setRows((rows) => [...rows, newRow]);
   };
@@ -105,7 +100,29 @@ const App = () => {
           <Button className="delete-conteiner__button" text="Восстановить" onClick={() => restoreRows()}/>
         </div>
       </div>
-      <Table head={tableHead} rows={rows}/>
+      <Table head={tableHead}> 
+        {rows.map((item, index) => {
+          return (
+            <tr key={index}>
+              <TableCell id={item.id}>
+                {item.start_counter}
+              </TableCell>
+              <TableCell id={item.id}>
+                {item.step_counter}
+              </TableCell>
+              <TableCell id={item.id}>
+                {item.end_counter}
+              </TableCell>
+              <TableCell id={item.id}>
+                {item.action}
+              </TableCell>
+              <TableCell id={item.id}>
+                <Button text="Delete" icon={trashIcon} onClick={() => deleteItem(item.id)}/>
+              </TableCell>
+            </tr>
+          )
+        })}
+      </Table>
     </div>
   );
 }
